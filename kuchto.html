@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Private Sexual Health Consultation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+        }
+        button {
+            padding: 8px 12px;
+        }
+    </style>
+    <script>
+        async function sendQuestion() {
+            const question = document.getElementById("question").value;
+            if (!question) return;
+            
+            // Append the user's message to the chat area.
+            const chatArea = document.getElementById("chat");
+            chatArea.innerHTML += "<p><strong>You:</strong> " + question + "</p>";
+            
+            // Clear the input field.
+            document.getElementById("question").value = "";
+            
+            try {
+                // Make the POST request to the FastAPI endpoint.
+                const response = await fetch("http://127.0.0.1:8000/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ "question": question })
+                });
+                
+                // Ensure we got a successful response.
+                if (!response.ok) {
+                    throw new Error("Network response was not ok: " + response.statusText);
+                }
+                
+                // Parse the JSON response.
+                const data = await response.json();
+                
+                // Append the assistant's reply.
+                chatArea.innerHTML += "<p><strong>Assistant:</strong> " + data.response + "</p>";
+            } catch (error) {
+                console.error("Error:", error);
+                chatArea.innerHTML += "<p><strong>Assistant:</strong> Sorry, something went wrong.</p>";
+            }
+            
+            // Auto-scroll to the bottom of the chat.
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+    </script>
+</head>
+<body>
+    <h1>Private Sexual Health Consultation</h1>
+    <div id="chat"></div>
+    <input type="text" id="question" placeholder="Ask your question about sexual health..."/>
+    <button onclick="sendQuestion()">Send</button>
+    <p style="font-size:0.9em; color: gray;">
+        For medical emergencies or diagnosis, please consult a healthcare professional.
+    </p>
+</body>
+</html>
