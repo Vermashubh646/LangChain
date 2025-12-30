@@ -7,7 +7,6 @@ load_dotenv("../.env")
 llm= HuggingFaceEndpoint(
     repo_id="deepseek-ai/DeepSeek-V3.1",
     task="text-generation",
-    max_new_tokens=5,
     huggingfacehub_api_token=os.getenv("HUGGINGFACEHUB_ACCESS_TOKEN")
 )
 
