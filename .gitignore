@@ -1,0 +1,5 @@
+.venv/
+
+New_Progress/.env
+
+huggingface_cache
