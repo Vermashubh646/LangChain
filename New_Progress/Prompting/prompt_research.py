@@ -17,7 +17,7 @@ template = PromptTemplate(
     Ensure the summary is clear, accurate, and aligned with the provided style and
     length.
     """,
-    input_variable=['paper_input','style_input','length_input'],
+    input_variables=['paper_input','style_input','length_input'],
     validate_template=True
     )
 
