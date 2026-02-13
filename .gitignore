@@ -1,5 +1,5 @@
 .venv/
 
-New_Progress/.env
-
-huggingface_cache
+.env
+.vscode/
+huggingface_cache/
